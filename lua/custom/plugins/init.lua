@@ -2,4 +2,9 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {}
+
+-- Load all plugin files in this directory
+return {
+  -- Import lualine configuration
+  require 'custom.plugins.lualine',
+}
