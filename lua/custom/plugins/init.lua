@@ -1,5 +1,5 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
+-- このディレクトリや他のファイルに独自のプラグインを追加できます！
+--  このディレクトリでマージコンフリクトを起こさないことを約束します :)
 --
--- See the kickstart.nvim README for more information
+-- 詳細についてはkickstart.nvimのREADMEを参照してください
 return {}
