@@ -1,7 +1,7 @@
 --[[
 
 =====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
+==================== 続行する前にこれを読んでください ====================
 =====================================================================
 ========                                    .-----.          ========
 ========         .----------------------.   | === |          ========
@@ -20,90 +20,89 @@
 =====================================================================
 =====================================================================
 
-What is Kickstart?
+Kickstartとは何ですか？
 
-  Kickstart.nvim is *not* a distribution.
+  Kickstart.nvimはディストリビューション*ではありません*。
 
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
+  Kickstart.nvimはあなた自身の設定の出発点です。
+    目標は、コードの全ての行を上から下まで読み、設定が何をしているかを理解し、
+    あなたのニーズに合わせて修正できるようになることです。
 
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
+    それができたら、探索、設定、調整を始めてNeovimを自分のものにしましょう！
+    それは、しばらくKickstartをそのまま使い続けることかもしれませんし、
+    すぐにモジュール化することかもしれません。あなた次第です！
 
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
+    Luaについて何も知らない場合は、ガイドを読むことをお勧めします。
+    10-15分で読める例：
       - https://learnxinyminutes.com/docs/lua/
 
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
+    Luaについて少し理解した後は、NeovimがLuaをどのように統合しているかの
+    リファレンスとして `:help lua-guide` を使用できます。
     - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
+    - (またはHTML版): https://neovim.io/doc/user/lua-guide.html
 
-Kickstart Guide:
+Kickstartガイド:
 
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
+  TODO: 最初にすべきことは、Neovimで `:Tutor` コマンドを実行することです。
 
-    If you don't know what this means, type the following:
+    これが何を意味するかわからない場合は、以下を入力してください：
       - <escape key>
       - :
       - Tutor
       - <enter key>
 
-    (If you already know the Neovim basics, you can skip this step.)
+    (Neovimの基本をすでに知っている場合は、このステップをスキップできます。)
 
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
+  それが完了したら、kickstart init.luaの残りの部分を**読みながら**作業を続けることができます。
 
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
+  次に、`:help` を実行して**読んでください**。
+    これにより、組み込みヘルプドキュメントの読み方、ナビゲーション、検索に関する
+    基本情報を含むヘルプウィンドウが開きます。
 
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
+    これは、何かに困ったり混乱したりしたときに最初に見るべき場所です。
+    これは私のお気に入りのNeovim機能の一つです。
 
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
+    最も重要なのは、"<space>sh" キーマップを提供していることです。これは[h]elpドキュメントを
+    [s]earch（検索）するためのもので、何を探しているか正確にわからないときに非常に便利です。
 
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
+  init.lua全体にいくつかの `:help X` コメントを残しました。
+    これらは、Kickstartで使用される関連する設定、プラグイン、またはNeovim機能について
+    より多くの情報を見つける場所のヒントです。
 
-   NOTE: Look for lines like this
+   注意: このような行を探してください
 
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
+    ファイル全体を通して。これらはあなた（読者）のためのもので、何が起こっているかを
+    理解するのに役立ちます。何をしているかわかったら自由に削除してください。
+    しかし、Neovim設定で初めて遭遇するさまざまな構造に対するガイドとして機能するはずです。
 
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
+kickstartのインストール中にエラーが発生した場合は、詳細について `:checkhealth` を実行してください。
 
-I hope you enjoy your Neovim journey,
+あなたのNeovimの旅を楽しんでください。
 - TJ
 
-P.S. You can delete this when you're done too. It's your config now! :)
+追伸: これも終わったら削除できます。今やあなたの設定です！ :)
 --]]
 
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+-- <space>をリーダーキーに設定
+-- `:help mapleader` を参照
+--  注意: プラグインが読み込まれる前に実行する必要があります（そうしないと間違ったリーダーが使用されます）
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Set to true if you have a Nerd Font installed and selected in the terminal
+-- ターミナルでNerd Fontをインストールして選択している場合はtrueに設定
 vim.g.have_nerd_font = false
 
--- [[ Setting options ]]
+-- [[ オプション設定 ]]
 require 'options'
 
--- [[ Basic Keymaps ]]
+-- [[ 基本キーマップ ]]
 require 'keymaps'
 
--- [[ Install `lazy.nvim` plugin manager ]]
+-- [[ `lazy.nvim` プラグインマネージャーをインストール ]]
 require 'lazy-bootstrap'
 
--- [[ Configure and install plugins ]]
+-- [[ プラグインを設定してインストール ]]
 require 'lazy-plugins'
 
--- The line beneath this is called `modeline`. See `:help modeline`
+-- この下の行は `modeline` と呼ばれます。`:help modeline` を参照
 -- vim: ts=2 sts=2 sw=2 et
