@@ -21,6 +21,30 @@ return {
     open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- when opening files, do not use windows containing these filetypes or buftypes
     sort_case_insensitive = false, -- used when sorting files and directories in the tree
     sort_function = nil, -- use a custom function for sorting files and directories in the tree
+    -- バッファを閉じたときのレイアウト維持設定
+    event_handlers = {
+      {
+        event = "file_opened",
+        handler = function(file_path)
+          -- ファイルを開いた後もneotreeを開いたままにする
+          require("neo-tree.command").execute({ action = "show" })
+        end
+      },
+      {
+        event = "neo_tree_buffer_enter",
+        handler = function()
+          -- neotreeにフォーカスが移った時の処理
+          vim.cmd 'highlight! Cursor blend=100'
+        end
+      },
+      {
+        event = "neo_tree_buffer_leave",
+        handler = function()
+          -- neotreeからフォーカスが離れた時の処理
+          vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
+        end
+      }
+    },
     default_component_configs = {
       container = {
         enable_character_fade = true
@@ -169,9 +193,31 @@ return {
       show_unloaded = true,
       window = {
         mappings = {
-          ['bd'] = 'buffer_delete',
+          ['bd'] = function(state)
+            -- mini.bufremoveを使用してバッファを削除（レイアウト保持）
+            local node = state.tree:get_node()
+            if node.type == "file" then
+              local bufnr = vim.fn.bufnr(node.path)
+              if bufnr ~= -1 then
+                require('mini.bufremove').delete(bufnr, false)
+                -- neotreeの表示を更新
+                require("neo-tree.sources.buffers").refresh(state)
+              end
+            end
+          end,
           ['<bs>'] = 'navigate_up',
           ['.'] = 'set_root',
+          -- バッファを強制削除（mini.bufremoveを使用）
+          ['BD'] = function(state)
+            local node = state.tree:get_node()
+            if node.type == "file" then
+              local bufnr = vim.fn.bufnr(node.path)
+              if bufnr ~= -1 then
+                require('mini.bufremove').delete(bufnr, true)
+                require("neo-tree.sources.buffers").refresh(state)
+              end
+            end
+          end,
         }
       },
     },
