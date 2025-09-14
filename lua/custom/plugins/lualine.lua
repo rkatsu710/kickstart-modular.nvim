@@ -2,6 +2,15 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    -- IMEステータス表示用の関数
+    local function imselect_status()
+      return require("imselect").input_method()
+    end
+    
+    -- IMEステータス表示用のハイライト設定
+    vim.api.nvim_command('highlight IME_Japanese guifg=#f7768e')
+    vim.api.nvim_command('highlight IME_Roman guifg=#9ece6a')
+    
     require('lualine').setup {
       options = {
         theme = 'auto', -- colorschemeに合わせる
@@ -13,7 +22,7 @@ return {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { { 'filename', path = 1 } }, -- path=1: 相対パス表示
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { imselect_status, 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },

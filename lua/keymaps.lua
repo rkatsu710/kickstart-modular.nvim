@@ -5,6 +5,36 @@
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Ctrl+[ でインサートモードを抜けると同時に日本語入力をOFF
+vim.keymap.set('i', '<C-[>', function()
+  -- インサートモードを抜ける
+  vim.cmd('stopinsert')
+  -- 日本語入力をOFFにする
+  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+end, { desc = 'Exit insert mode and turn off Japanese input' })
+
+-- jj でインサートモードを抜けると同時に日本語入力をOFF
+vim.keymap.set('i', 'jj', function()
+  -- インサートモードを抜ける
+  vim.cmd('stopinsert')
+  -- 日本語入力をOFFにする
+  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+end, { desc = 'Exit insert mode with jj and turn off Japanese input' })
+
+-- っj でインサートモードを抜けると同時に日本語入力をOFF（日本語入力時）
+vim.keymap.set('i', 'っj', function()
+  -- インサートモードを抜ける
+  vim.cmd('stopinsert')
+  -- 日本語入力をOFFにする
+  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+end, { desc = 'Exit insert mode with っj and turn off Japanese input' })
+
+-- IMEステータス表示のトグル
+vim.keymap.set("n", "<leader>II", ":lua require'imselect'.toggle_ime_display()<CR>", { desc = 'Toggle IME status display' })
+
+-- デバッグ用：現在のIME識別子を表示
+vim.keymap.set("n", "<leader>Id", ":lua require'imselect'.show_current_ime()<CR>", { desc = 'Show current IME identifier' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -102,5 +132,28 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'VimEnter' }, {
     end
   end,
 })
+
+-- === 削除操作でクリップボードを汚さない設定 ===
+-- d, x, c, s 操作時にクリップボードに送らず、ブラックホールレジスタ("_)を使用
+vim.keymap.set('n', 'd', '"_d', { desc = 'Delete without copying to clipboard' })
+vim.keymap.set('v', 'd', '"_d', { desc = 'Delete without copying to clipboard' })
+vim.keymap.set('n', 'x', '"_x', { desc = 'Delete character without copying to clipboard' })
+vim.keymap.set('v', 'x', '"_x', { desc = 'Delete selection without copying to clipboard' })
+vim.keymap.set('n', 'c', '"_c', { desc = 'Change without copying to clipboard' })
+vim.keymap.set('v', 'c', '"_c', { desc = 'Change without copying to clipboard' })
+vim.keymap.set('n', 's', '"_s', { desc = 'Substitute without copying to clipboard' })
+vim.keymap.set('v', 's', '"_s', { desc = 'Substitute without copying to clipboard' })
+
+-- 明示的にクリップボードに削除内容を送りたい場合のキーマップ
+vim.keymap.set('n', '<leader>d', 'd', { desc = 'Delete and copy to clipboard' })
+vim.keymap.set('v', '<leader>d', 'd', { desc = 'Delete and copy to clipboard' })
+vim.keymap.set('n', '<leader>x', 'x', { desc = 'Delete character and copy to clipboard' })
+vim.keymap.set('v', '<leader>x', 'x', { desc = 'Delete selection and copy to clipboard' })
+vim.keymap.set('n', '<leader>c', 'c', { desc = 'Change and copy to clipboard' })
+vim.keymap.set('v', '<leader>c', 'c', { desc = 'Change and copy to clipboard' })
+
+-- dd（行削除）も同様に設定
+vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line without copying to clipboard' })
+vim.keymap.set('n', '<leader>dd', 'dd', { desc = 'Delete line and copy to clipboard' })
 
 -- vim: ts=2 sts=2 sw=2 et
