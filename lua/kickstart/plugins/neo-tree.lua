@@ -64,8 +64,8 @@ return {
         expander_highlight = 'NeoTreeExpander',
       },
       icon = {
-        folder_closed = '',
-        folder_open = '',
+        folder_closed = "",
+        folder_open = "", 
         folder_empty = 'ﰊ',
         -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
         -- then these will never be used.
@@ -100,7 +100,7 @@ return {
     filesystem = {
       filtered_items = {
         visible = false, -- when true, they will just be displayed differently than normal items
-        hide_dotfiles = true,
+        hide_dotfiles = false,
         hide_gitignored = true,
         hide_hidden = true, -- only works on Windows for hidden files/directories
         hide_by_name = {

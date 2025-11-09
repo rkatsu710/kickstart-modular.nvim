@@ -1,8 +1,8 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+-- [[ 基本キーマップ ]]
+--  `:help vim.keymap.set()` を参照
 
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
+-- ノーマルモードで <Esc> を押したときに検索ハイライトをクリア
+--  `:help hlsearch` を参照
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Ctrl+[ でインサートモードを抜けると同時に日本語入力をOFF
@@ -10,7 +10,7 @@ vim.keymap.set('i', '<C-[>', function()
   -- インサートモードを抜ける
   vim.cmd('stopinsert')
   -- 日本語入力をOFFにする
-  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+  vim.fn.system('macism com.apple.inputmethod.Kotoeri.RomajiTyping.Roman')
 end, { desc = 'Exit insert mode and turn off Japanese input' })
 
 -- jj でインサートモードを抜けると同時に日本語入力をOFF
@@ -18,7 +18,7 @@ vim.keymap.set('i', 'jj', function()
   -- インサートモードを抜ける
   vim.cmd('stopinsert')
   -- 日本語入力をOFFにする
-  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+  vim.fn.system('macism com.apple.inputmethod.Kotoeri.RomajiTyping.Roman')
 end, { desc = 'Exit insert mode with jj and turn off Japanese input' })
 
 -- っj でインサートモードを抜けると同時に日本語入力をOFF（日本語入力時）
@@ -26,7 +26,7 @@ vim.keymap.set('i', 'っj', function()
   -- インサートモードを抜ける
   vim.cmd('stopinsert')
   -- 日本語入力をOFFにする
-  vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+  vim.fn.system('macism com.apple.inputmethod.Kotoeri.RomajiTyping.Romann')
 end, { desc = 'Exit insert mode with っj and turn off Japanese input' })
 
 -- IMEステータス表示のトグル
@@ -35,18 +35,17 @@ vim.keymap.set("n", "<leader>II", ":lua require'imselect'.toggle_ime_display()<C
 -- デバッグ用：現在のIME識別子を表示
 vim.keymap.set("n", "<leader>Id", ":lua require'imselect'.show_current_ime()<CR>", { desc = 'Show current IME identifier' })
 
--- Diagnostic keymaps
+-- 診断一覧を開くキーマップ
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
+-- 組み込みターミナルで使いやすいショートカットでノーマルモードへ戻る設定
+-- 通常は <C-\><C-n> を押す必要があり、慣れないと気付きづらい組み合わせです。
 --
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
+-- NOTE: すべてのターミナルや tmux で動作するとは限りません。環境に合わせて別のマッピングを使うか、
+-- 必要に応じて <C-\><C-n> を利用してください。
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- Neo-tree keymaps
+-- Neo-tree 用キーマップ
 vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
 vim.keymap.set('n', '<leader>o', '<cmd>Neotree focus<CR>', { desc = 'Focus Neo-tree' })
 
@@ -86,33 +85,33 @@ for i = 1, 4 do
   vim.keymap.set('n', '<leader>' .. i, ':tabn ' .. i .. '<CR>', { desc = 'Go to tab ' .. i })
 end
 
--- TIP: Disable arrow keys in normal mode
+-- TIP: ノーマルモードで矢印キーを無効化するサンプル
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
+-- 分割ウィンドウ間の移動を簡単にするキーマップ
+--  CTRL+<hjkl> でウィンドウを切り替えます
 --
---  See `:help wincmd` for a list of all window commands
+--  すべてのウィンドウコマンドは `:help wincmd` を参照
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
+-- NOTE: ターミナルによってはキーマップが衝突したり、固有のキーコードを送れない場合があります
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+-- [[ 基本的なオートコマンド ]]
+--  `:help lua-guide-autocommands` を参照
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
+-- テキストをヤンク（コピー）したときにハイライトする
+--  ノーマルモードで `yap` を試してみてください
+--  `:help vim.hl.on_yank()` を参照
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -128,7 +127,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'VimEnter' }, {
   callback = function()
     -- ノーマルモードの場合のみ実行
     if vim.fn.mode() == 'n' then
-      vim.fn.system('macism com.google.inputmethod.Japanese.Roman')
+      vim.fn.system('macism com.apple.inputmethod.Kotoeri.RomajiTyping.Roman')
     end
   end,
 })

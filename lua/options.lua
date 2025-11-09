@@ -1,76 +1,75 @@
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+-- [[ オプション設定 ]]
+-- `:help vim.o` を参照
+-- NOTE: ここに挙げている設定は自由に変更できます。
+--  その他の項目は `:help option-list` を参照してください。
 --
 vim.o.hidden = true
 
--- Make line numbers default
+-- デフォルトで行番号を表示
 vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
+-- 相対行番号を併用するとジャンプがしやすくなります。
+--  試して自分に合うか確認してみてください。
 -- vim.o.relativenumber = true
 
--- Enable mouse mode, can be useful for resizing splits for example!
+-- マウス操作を有効化（分割のサイズ変更などに便利）
 vim.o.mouse = 'a'
 
--- Don't show the mode, since it's already in the status line
+-- ステータスラインに表示するためモードは非表示にする
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
+-- OS と Neovim のクリップボードを同期
+--  起動時間が延びる可能性があるため `UiEnter` 後に設定しています。
+--  クリップボードを共有したくない場合はこの設定を削除してください。
+--  `:help 'clipboard'` を参照
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
--- Enable break indent
+-- 折り返し行でもインデントを維持
 vim.o.breakindent = true
 
--- Save undo history
+-- Undo 履歴をファイル保存
 vim.o.undofile = true
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+-- 検索語に大文字が含まれるか \C が付く場合を除き、小文字・大文字を区別しない
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Keep signcolumn on by default
+-- サインカラムを常時表示
 vim.o.signcolumn = 'yes'
 
--- Decrease update time
+-- 更新間隔を短くする
 vim.o.updatetime = 250
 
--- Decrease mapped sequence wait time
+-- マッピング待機時間を短くする
 vim.o.timeoutlen = 300
 
--- Configure how new splits should be opened
+-- 新しい分割ウィンドウの開き方を設定
 vim.o.splitright = true
 vim.o.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
+-- エディタで空白文字などをどのように表示するかを設定
+--  `:help 'list'`
+--  および `:help 'listchars'` を参照
 --
---  Notice listchars is set using `vim.opt` instead of `vim.o`.
---  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
---   See `:help lua-options`
---   and `:help lua-options-guide`
+--  `listchars` は `vim.o` ではなく `vim.opt` で設定している点に注意してください。
+--  `vim.o` とほぼ同じですが、テーブルを扱いやすいインターフェースを提供します。
+--   詳細は `:help lua-options`
+--   と `:help lua-options-guide` を参照
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Preview substitutions live, as you type!
+-- 置換結果を入力しながらプレビュー
 vim.o.inccommand = 'split'
 
--- Show which line your cursor is on
+-- カーソル行をハイライト
 vim.o.cursorline = true
 
--- Minimal number of screen lines to keep above and below the cursor.
+-- カーソル上下に確保する最小行数
 vim.o.scrolloff = 10
 
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
--- See `:help 'confirm'`
+-- 未保存の変更がある状態で `:q` などを実行した場合に保存確認ダイアログを表示
+-- `:help 'confirm'` を参照
 vim.o.confirm = true
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,27 +1,28 @@
--- [[ Configure and install plugins ]]
+-- [[ プラグインの構成とインストール ]]
 --
---  To check the current status of your plugins, run
+--  現在のプラグイン状況を確認するには
 --    :Lazy
+--  を実行します
 --
---  You can press `?` in this menu for help. Use `:q` to close the window
+--  このメニューで `?` を押すとヘルプを表示でき、`:q` でウィンドウを閉じます
 --
---  To update plugins you can run
+--  プラグインを更新するには
 --    :Lazy update
+--  を実行します
 --
--- NOTE: Here is where you install your plugins.
+-- NOTE: 使用したいプラグインはここで定義します。
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  -- NOTE: プラグインはリンク（GitHub なら 'owner/repo' 形式）で追加できます。
+  'NMAC427/guess-indent.nvim', -- タブ幅とシフト幅を自動検出
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
+  -- NOTE: テーブルで追加することもでき、
+  -- 最初の要素にリンクを指定し、残りのキーで読み込み条件や設定を制御します。
   --
-  -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
+  -- `opts = {}` を指定するとプラグインの `setup()` に同じテーブルが渡され、強制的に読み込まれます。
   --
 
-  -- modular approach: using `require 'path.name'` will
-  -- include a plugin definition from file lua/path/name.lua
+  -- モジュール化の例: `require 'path.name'` と書くと
+  -- lua/path/name.lua にあるプラグイン定義を読み込みます
 
   require 'kickstart.plugins.gitsigns',
 
@@ -43,14 +44,13 @@ require('lazy').setup({
 
   require 'kickstart.plugins.treesitter',
 
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
+  -- 以下のコメントは Kickstart リポジトリを取得している場合のみ有効です。
+  -- init.lua をコピーしただけの場合はリポジトリから該当ファイルをダウンロードし、所定の場所へ配置してください。
 
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  -- NOTE: Neovim をさらに活用するために、Kickstart 用のプラグインを追加・設定しましょう。
   --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  --  ここでは Kickstart リポジトリに含まれている例を紹介します。
+  --  使いたい行のコメントを外すと有効になります（変更後は Neovim を再起動してください）。
   --
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
@@ -58,20 +58,20 @@ require('lazy').setup({
   -- require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
+  -- NOTE: 下記の import を使うと `lua/custom/plugins/*.lua` から自作プラグイン設定を読み込めます。
+  --    設定をモジュール化する簡単な方法です。
   --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  --  この行のコメントを外し、`lua/custom/plugins/*.lua` にプラグイン定義を追加してみましょう。
   { import = 'custom.plugins' },
   --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
+  -- 読み込みや設定例については `:help lazy.nvim-🔌-plugin-spec` を参照してください。
+  -- Telescope から検索することもできます。
+  -- ノーマルモードで `<space>sh` を押し、`lazy.nvim-plugin` と入力します。
+  -- 直前の検索を同じウィンドウで再開するには `<space>sr` を使います。
 }, {
   ui = {
-    -- If you are using a Nerd Font: set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    -- Nerd Font を使っている場合は icons を空テーブルにすると lazy.nvim の既定アイコンを使用します。
+    -- それ以外の場合は Unicode アイコンのテーブルを定義してください。
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
